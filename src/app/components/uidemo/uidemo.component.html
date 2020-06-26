@@ -1,0 +1,25 @@
+<div class="card" *ngFor="let item of projects">
+  <div class="card-body"  >
+      <h2>Group {{item.group}}</h2>
+      <div class="panel panel-primary">
+        <table *ngFor="let itemColor of item.color">
+            <tr> 
+              <th class="padding-left-0 padding-bottom-0" style="width: 200px;">
+                <div class="col-sm-4 panel-heading" [ngClass]="{'heading-red' : itemColor.color == 'red','heading-blue' : itemColor.color == 'blue','heading-green' : itemColor.color == 'green','heading-yellow' : itemColor.color == 'yellow'}">Status {{itemColor.color}}</div> 
+                <div class="col-sm-4" ><th>{{itemColor.listProjectData.length}} Tasks</th></div></th>
+              <th>Id member</th>
+              <th>Name</th>     
+              <th>Priority</th>
+              <th>Due Date</th>            
+            </tr>
+            <tr *ngFor="let listContents of itemColor.listProjectData" >
+              <td class="panel-body" [ngClass]="{'border-red': itemColor.color == 'red','border-blue': itemColor.color == 'blue','border-green': itemColor.color == 'green','border-yellow': itemColor.color == 'yellow'}" style="width: 200px;">{{listContents.task}}</td>
+              <td class="panel-body" style="border-left-style: none;">{{listContents.idMember}}</td>
+              <td class="panel-body" style="border-left-style: none;">{{listContents.name}}</td>  
+              <td class="panel-body" style="border-left-style: none;">{{listContents.priority}}</td>        
+              <td class="panel-body" style="border-left-style: none;">{{listContents.date}}</td>              
+            </tr>
+            </table>    
+      </div>  
+  </div>
+</div>

@@ -1,0 +1,386 @@
+<!-- profile with skeleton -->
+<div class="col-sm-12">
+  <div class="card mb-3">
+    <div class="card-body"> 
+      <ul class="nav nav-tabs profile-tabs nav-fill" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'home'}" (click)="this.activeTab = 'home'" id="home-tab" data-toggle="tab" href="javascript:" role="tab" aria-controls="home" aria-selected="true"><i class="feather icon-home mr-2"></i>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'profile'}" (click)="this.activeTab = 'profile'" id="profile-tab" data-toggle="tab" href="javascript:" role="tab" aria-controls="profile" aria-selected="false"><i class="feather icon-user mr-2"></i>Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'contact'}" (click)="this.activeTab = 'contact'" id="contact-tab" data-toggle="tab" href="javascript:" role="tab" aria-controls="contact" aria-selected="false"><i class="feather icon-phone mr-2"></i>My Contacts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-reset" [ngClass]="{'active': this.activeTab === 'gallery'}" (click)="this.activeTab = 'gallery'" id="gallery-tab" data-toggle="tab" href="javascript:" role="tab" aria-controls="gallery" aria-selected="false"><i class="feather icon-image mr-2"></i>Gallery</a>
+        </li>
+      </ul>
+      <div class="row mb-n4">
+        <div class="col-xl-4 col-md-6">
+          <app-card [hidHeader]="true" cardClass="user-card user-card-3 support-bar1" [isCardFooter]="true" footerClass="bg-light" >
+            <div class="text-center">
+              <img class="img-radius img-fluid wid-150" src="assets/images/user/img-avatar-1.jpg" alt="User image">
+              <h3 class="mb-1 mt-3 f-w-400">{{nameUser}}</h3>
+              <p class="mb-3 text-muted">UI/UX Designer</p>
+            </div>            
+            <div class="app-card-footer">
+              <div class="row text-center">
+                <div class="col">
+                  <h6 class="mb-1">37</h6>
+                  <p class="mb-0">Mails</p>
+                </div>
+                <div class="col">
+                  <h6 class="mb-1">2749</h6>
+                  <p class="mb-0">Followers</p>
+                </div>
+                <div class="col">
+                  <h6 class="mb-1">678</h6>
+                  <p class="mb-0">Following</p>
+                </div>
+              </div>
+            </div>           
+          </app-card>
+          <button class="btn waves-effect waves-light btn-info" style="float: right;" *ngIf="activeTab != 'profile'" (click)="activeTab = 'profile'">show >></button>
+          <button class="btn waves-effect waves-light btn-info" style="float: right;" *ngIf="activeTab === 'profile'" (click)="activeTab = 'unprofile'"> << hide </button>
+        </div>
+        <div class="col-xl-8 col-md-6">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'profile'}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="merge-card">
+                <app-card [hidHeader]="true" cardClass="mb-0" blockClass="d-flex align-items-center justify-content-between">
+                  <h4 class="mb-0"> {{nameUser}}'s Profile</h4>
+                  <button type="button" (click)="this.editProfile = !this.editProfile; this.editProfileIcon = this.editProfile ? 'icon-x': 'icon-edit';" class="btn btn-primary btn-sm rounded m-0 float-right" data-toggle="collapse" data-target=".pro-det-edit" aria-expanded="false" aria-controls="pro-det-edit-1 pro-det-edit-2">
+                    <i class="feather" [ngClass]="editProfileIcon"></i>
+                  </button>
+                </app-card>
+                <app-card [hidHeader]="true" blockClass="border-top pro-det-edit collapse show" *ngIf="!editProfile">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Full Name</label>
+                    <div class="col-sm-9">
+                      {{nameUser}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Gender</label>
+                    <div class="col-sm-9">
+                      {{gender}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Birth Date</label>
+                    <div class="col-sm-9">
+                      {{birthday}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Martail Status</label>
+                    <div class="col-sm-9">
+                      {{martailStatus}}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Location</label>
+                    <div class="col-sm-9">
+                      <p class="mb-0 text-muted">{{Location}}</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-xl-3 col-md-6">
+                      <h5 class="mb-3">Task in progress</h5>
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <label class="adge badge-light-warning">{{taskInProPercent}}% <i class="m-l-10 feather icon-arrow-up"></i></label>
+                        </div>
+                        <div class="col text-right">
+                          <h5 class="">{{taskInProgess}} / {{taskTotal}}</h5>
+                        </div>
+                      </div>
+                      <div class="m-t-5">
+                        <ngb-progressbar type="warning" [value]="taskInProPercent"></ngb-progressbar>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <h5 class="mb-3">Task Done</h5>
+                      <div class="row align-items-center">
+                        <div class="col">
+                          <label class="badge badge-light-success">{{taskDonePercent}}% <i class="m-l-10 feather icon-arrow-up"></i></label>
+                        </div>
+                        <div class="col text-right">
+                          <h5 class="">{{taskDone}} / {{taskTotal}}</h5>
+                        </div>
+                      </div>
+                      <div class="m-t-5">
+                        <ngb-progressbar type="success" [value]="taskDonePercent"></ngb-progressbar>
+                      </div>
+                    </div>
+                  </div>
+                  
+                
+                </app-card>
+                <app-card [hidHeader]="true" blockClass="border-top pro-det-edit collapse show" *ngIf="editProfile">
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Full Name</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" placeholder="Full Name" #name value={{nameUser}}>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Gender</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" #gender>
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Birth Date</label>
+                    <div class="col-sm-9">
+                      <input type="date" class="form-control" #birthday value={{birthday}} >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Martail Status</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" #marrie>
+                        <option>Married</option>
+                        <option selected>Unmarried</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label font-weight-bolder">Location</label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" #location >{{Location}}</textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
+                      <button type="button" class="btn btn-primary" (click)="editName(name.value,birthday.value,gender.value,marrie.value,location.value)">Save</button>
+                    </div>
+                  </div>                
+                </app-card>       
+              </div>
+            </div>
+            <div class="tab-pane fade" [ngClass]="{'show active': this.activeTab === 'home'}" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="merge-card">
+                <app-card cardTitle="Josephin Doe" cardCaption="50 minutes ago - posted on your timeline" captionClass="mb-0 text-muted" cardClass="mb-0" blockClass="p-0">
+                  <a href="javascript:"><img src="assets/images/profile/bg-1.jpg" alt="" class="img-fluid"></a>
+                </app-card>
+                <app-card [hidHeader]="true" cardClass="mb-0">
+                  <a href="javascript:" class="text-h-primary">
+                    <h6>The new Lorem Ipsum is simply</h6>
+                  </a>
+                  <p class="text-muted mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                </app-card>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- end profile with skeleton -->
+
+<!-- profile with no templete -->
+<!-- <div class="row">
+  <div class="col-sm-12">
+    <div class="card mb-3">
+      <div class="card-body">        
+        <div class="col-md-6">  
+          <h4>Profile Details</h4>
+          <li><b>Name: </b>{{nameUser}}</li>
+          <li><b>Old: </b>{{oldUser}}</li>
+          <li><b>BirthDay: </b>{{birthday}}</li>
+          <li><b>Gender: </b>{{gender}}</li>
+          <li><b>Marrie Status: </b>{{martailStatus}}</li>
+          <li><b>Location: </b>{{Location}}</li>      
+      </div>
+     </div>
+     <div class="card-body">
+      <div class="col-md-12">
+        <h4>Edit Your Name</h4>    
+         <form (submit)="editName(name.value,birthday,gender,martailStatus,Location)">
+          <div>
+            <label for="phone"><b>Edit Name: </b></label>
+            <input type="text" #name placeholder="Edit your name">            
+          </div>
+       </form> 
+      </div>
+    </div>    
+  </div>
+  </div>
+</div> -->
+
+<!-- end profile with no templete -->
+
+<!-- Add phone with form skeleton validate -->
+<!-- <div class="row"> 
+  <div class="col-sm-6">
+    <app-card cardTitle="Add Your Phone" cardClass="card-datatable" [options]="false">
+      <div class="table-responsive"> 
+        <div class="card-body">
+          <div class="col-md-12">
+            <form action="javascript:" class="form-inline" (submit)="addPhone(phone.value)">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <input type="text" class="form-control" name="validation-phone" placeholder="Enter Contact Number" [ngClass]="{'is-invalid': !phone.valid && (phone.dirty || phone.touched || isSubmit)}" #phone="ngModel" required maxlength="10" minlength="10" phone="IN" [(ngModel)]="formInput.phone">
+                  <label *ngIf="!phone.valid && (phone.dirty || phone.touched || isSubmit)" id="validation-phone-error" class="error jquery-validation-error small form-text invalid-feedback">Please enter valid contact number.</label>
+                </div>
+              </div>  
+            </form>
+            <br>
+            <li style="list-style:none;" *ngFor="let phone of phones;let i = index">{{i+1}}. {{phone}}  
+              <button class="btn btn-danger btn-sm rounded float-center" (click)="deletePhone(phone)" >X</button>
+            </li>
+          </div>
+        </div>
+      
+      </div>
+    </app-card>
+  </div>
+  <div class="col-sm-6">
+    <app-card cardTitle="Edit Child Components" cardClass="card-datatable" [options]="false">
+      <b>Name: </b>{{nameUser}}
+      <hr>
+      <app-subProfile [name]="nameUser" (newName)="getName($event)"></app-subProfile>
+      <form>
+        <div class="form-group row">
+          <label for="nameUser" class="col-sm-3 col-form-label">Name TwoWay Bindindind:</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" [(ngModel)]="nameUser" name="nameUser">
+          </div>
+        </div> 
+      </form>
+    </app-card>
+     
+    </div>
+</div> -->
+<!-- End Add phone with form skeleton -->
+
+<!-- DataTable by skeleton anf modal -->
+<!-- <div class="row"> 
+  <div class="col-sm-12">
+    <app-card cardTitle="Data User Profile" cardClass="card-datatable" [options]="false">
+      <div class="table-responsive">        
+        <table datatable class="table table-striped table-bordered nowrap table-hover">
+          <thead>
+          <tr>
+             <th>Id</th>
+             <th>Name</th>
+            <th>Position</th>
+            <th>Edit</th> 
+            <th>Delete</th>               
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of dataTable;">
+            <td>{{item.id}}</td>
+            <td >{{item.name}} </td>
+            <td>{{item.position}}</td>
+           <td> <button class="btn btn-warning btn-sm" (click)="editNameTable(item.name,item.position)" >Edit</button></td> 
+           <td> <button class="btn btn-danger btn-sm" (click)="deleteNameTable(item.name,item.position)" >Delete</button></td> 
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>  
+</div> -->
+<!-- End DataTable by skeleton anf modal -->
+<!-- <app-modalEdit (nameOut)="getName($event)" ></app-modalEdit> -->
+
+<!-- <h5>Post List</h5>
+<ul>
+  <li *ngFor="let post of postList;let i = index;">{{i+1}}. {{post.title}}</li>
+</ul> -->
+
+<!-- DataTable From Service -->
+<!-- <div class="row"> 
+  <div class="col-sm-12">
+    <app-card cardTitle="Post List Service" cardClass="card-datatable" [options]="false">
+      <div class="table-responsive">        
+        <table datatable class="table table-striped table-bordered nowrap table-hover">
+          <thead>
+          <tr>
+             <th>Id</th>
+             <th>User Id</th>
+             <th>Title</th>      
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let post of postList;">
+            <td>{{post.id}}</td>
+            <td >{{post.userId}} </td>
+            <td>{{post.title}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>  
+</div> -->
+<!-- End DataTable From Service -->
+
+<!-- DataTable From Service -->
+
+<div class="col-sm-12">
+  <div class="card mb-3">
+    <div class="card-body"> 
+    <app-card cardTitle="User Infomation" cardClass="card-datatable" [options]="false">
+      <button class="btn btn-primary btn-sm" (click)="addPost()">Add</button>  <hr>
+      <div class="table-responsive">         
+        <table datatable class="table table-striped table-bordered nowrap table-hover">
+          <thead>
+          <tr>
+             <th>Id</th>
+             <th>User Id</th>
+             <th>Name</th>   
+             <th>Position</th>    
+             <th>Edit</th>   
+             <th>Delete</th>    
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let postDb of postListDB;">
+            <td>{{postDb.id}}</td>
+            <td >{{postDb.userId}} </td>
+            <td>{{postDb.title}}</td>
+            <td>{{postDb.body}}</td>
+            <td> <button class="btn btn-warning btn-sm" (click)="editPost(postDb)" >Edit</button></td> 
+            <td> <button class="btn btn-danger btn-sm"  (click)="deletePost(postDb.userId)">Delete</button></td> 
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>  
+</div>
+</div>
+
+
+<button class="btn btn-primary btn-sm" (click)="generatePDF()">download pdf</button>
+<div  id="table" class="table-responsive">   
+  <h2>Test</h2>      
+  <table datatable class="table table-striped table-bordered nowrap table-hover">
+    <thead>
+    <tr>
+       <th>Id</th>
+       <th>User Id</th> 
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+      <td>test</td>
+      <td >new</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!-- End DataTable From Service -->

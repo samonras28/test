@@ -1,0 +1,12 @@
+{
+    "/Post/*":{
+        "target":"http://localhost:5000/",
+        "secure":false,
+        "changeOrigin":true
+    },
+    "/Remove":{
+        "target":"http://localhost:5000/Post",
+        "secure":false,
+        "changeOrigin":true
+    }
+}
