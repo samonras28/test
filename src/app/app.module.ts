@@ -37,6 +37,10 @@ import { ModalEditPostComponent } from './components/modalEditPost/modalEditPost
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
 import { UidemoComponent } from './components/uidemo/uidemo.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { timer, Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
+import { NgxTimerModule } from 'ngx-timer';
+import { TinymceModule } from 'angular2-tinymce';
 
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
@@ -75,7 +79,10 @@ PdfMakeWrapper.setFonts(pdfFonts);
       NgbTabsetModule,
       NgbProgressbarModule,
       FormsModule,
-      HttpModule
+      HttpModule,
+      DragDropModule,
+      NgxTimerModule,
+      TinymceModule
    ],
    providers: [
       NavigationItem,

@@ -1,25 +1,445 @@
-<div class="card" *ngFor="let item of projects">
+<!-- <div class="card" *ngFor="let item of projects">
   <div class="card-body"  >
       <h2>Group {{item.group}}</h2>
-      <div class="panel panel-primary">
-        <table *ngFor="let itemColor of item.color">
+      <div class="panel panel-primary" >
+        <div class="col-md-12">
+          <table >
             <tr> 
               <th class="padding-left-0 padding-bottom-0" style="width: 200px;">
-                <div class="col-sm-4 panel-heading" [ngClass]="{'heading-red' : itemColor.color == 'red','heading-blue' : itemColor.color == 'blue','heading-green' : itemColor.color == 'green','heading-yellow' : itemColor.color == 'yellow'}">Status {{itemColor.color}}</div> 
-                <div class="col-sm-4" ><th>{{itemColor.listProjectData.length}} Tasks</th></div></th>
+                <div class="col-sm-4 panel-heading heading-red">Status Gold</div> 
+                <div class="col-sm-4" ><th> Tasks</th></div></th>
               <th>Id member</th>
               <th>Name</th>     
               <th>Priority</th>
               <th>Due Date</th>            
-            </tr>
-            <tr *ngFor="let listContents of itemColor.listProjectData" >
-              <td class="panel-body" [ngClass]="{'border-red': itemColor.color == 'red','border-blue': itemColor.color == 'blue','border-green': itemColor.color == 'green','border-yellow': itemColor.color == 'yellow'}" style="width: 200px;">{{listContents.task}}</td>
-              <td class="panel-body" style="border-left-style: none;">{{listContents.idMember}}</td>
-              <td class="panel-body" style="border-left-style: none;">{{listContents.name}}</td>  
-              <td class="panel-body" style="border-left-style: none;">{{listContents.priority}}</td>        
-              <td class="panel-body" style="border-left-style: none;">{{listContents.date}}</td>              
-            </tr>
-            </table>    
+            </tr>  
+            <cdk-drop #listOne [connectedTo]="[listTwo]" 
+            (dropped)="addToList($event)" 
+            [data]="projectsColorRed">                           
+            <tr *ngFor="let listContents of projectsColorRed" cdkDrag >
+              <ng-container *ngIf="listContents.color == 'red'">  
+              <td class="panel-body border-red" style="width: 200px;">{{listContents.task}}</td>
+              <td class="panel-body border-left-none" >{{listContents.idMember}}</td>
+              <td class="panel-body border-left-none" >{{listContents.name}}</td>  
+              <td class="panel-body border-left-none" >{{listContents.priority}}</td>        
+              <td class="panel-body border-left-none" >{{listContents.date}}</td>              
+              </ng-container> 
+            </tr>       
+         </cdk-drop>       
+          </table>   
+
+          <table >
+              <tr> 
+                <th class="padding-left-0 padding-bottom-0" style="width: 200px;">
+                  <div class="col-sm-4 panel-heading heading-green">Status Normal</div> 
+                  <div class="col-sm-4" ><th> Tasks</th></div></th>
+                <th>Id member</th>
+                <th>Name</th>     
+                <th>Priority</th>
+                <th>Due Date</th>            
+              </tr>    
+              <cdk-drop #listTwo [connectedTo]="[listOne]" 
+              (dropped)="addToList($event)" 
+              [data]="projectsColorGreen">
+              <tr *ngFor="let listContents of projectsColorGreen" cdkDrag >
+                <ng-container *ngIf="listContents.color == 'green'">  
+                <td class="panel-body border-green" style="width: 200px;">{{listContents.task}}</td>
+                <td class="panel-body border-left-none" >{{listContents.idMember}}</td>
+                <td class="panel-body border-left-none" >{{listContents.name}}</td>  
+                <td class="panel-body border-left-none" >{{listContents.priority}}</td>        
+                <td class="panel-body border-left-none" >{{listContents.date}}</td>              
+                </ng-container> 
+              </tr>    
+              </cdk-drop>  
+          </table>
+
+          <table >
+            <tr> 
+              <th class="padding-left-0 padding-bottom-0" style="width: 200px;">
+                <div class="col-sm-4 panel-heading heading-yellow">Status Star</div> 
+                <div class="col-sm-4" ><th> Tasks</th></div></th>
+              <th>Id member</th>
+              <th>Name</th>     
+              <th>Priority</th>
+              <th>Due Date</th>            
+            </tr>          
+            <cdk-drop #listThree [connectedTo]="[listOne,listTwo]" 
+            (dropped)="drop($event)" 
+            [data]="projectsColorYellow">         
+            <tr *ngFor="let listContents of projectsColorYellow" cdkDrag>
+              <ng-container *ngIf="listContents.color == 'yellow'">  
+              <td class="panel-body border-yellow" style="width: 200px;">{{listContents.task}}</td>
+              <td class="panel-body border-left-none" >{{listContents.idMember}}</td>
+              <td class="panel-body border-left-none" >{{listContents.name}}</td>  
+              <td class="panel-body border-left-none" >{{listContents.priority}}</td>        
+              <td class="panel-body border-left-none" >{{listContents.date}}</td>              
+              </ng-container> 
+            </tr>   
+            </cdk-drop>    
+          </table>
+        </div>
+         
       </div>  
+  </div>
+</div> -->
+
+<div class="card" *ngFor="let itemprojects of projects">
+  <div class="card-body example-container"  >
+      <h2>Team {{itemprojects.group}}</h2>
+      <div class="panel panel-primary" >
+        <div class="row" (dblclick)="this.showView = !this.showView">
+          <div class="col-md-2">
+            <div class="panel-heading heading-red">Star</div> 
+          </div>
+          <ng-container *ngIf="itemprojects.group == 'A'"> 
+            <div class="col-md-4 panel-heading" style="color: gray;">{{projectsColorRed.length? projectsColorRed.length:0 }} {{projectsColorRed.length == 0 || projectsColorRed.length == 1? 'Task':'Tasks'}}         
+            </div>
+          </ng-container>
+          <ng-container *ngIf="itemprojects.group == 'B'"> 
+            <div class="col-md-4 panel-heading" style="color: gray;">{{projectsColorRedB.length? projectsColorRedB.length:0 }} {{projectsColorRedB.length == 0 || projectsColorRedB.length == 1? 'Task':'Tasks'}}         
+            </div>
+          </ng-container>
+          <div class="col-md-2 panel-heading" style="color: gray;">  DataSouce          
+          </div>
+          <div class="col-md-1 panel-heading" style="color: gray;">  Date Start          
+          </div>
+          <div class="col-md-1 panel-heading" style="color: gray;">  Time Work          
+          </div>
+          <div class="col-md-2 panel-heading" style="color: gray;">  Follow Status          
+          </div>
+        </div>
+        <ng-container *ngIf="itemprojects.group == 'A'"> 
+          <cdk-drop cdkDropList id="listOne{{itemprojects.group}}" class="example-list"  [connectedTo]="connectedTo" 
+            (dropped)="addToList($event)" 
+            [data]="projectsColorRed" >
+          <div class="row example-box" (mousedown)="this.showView = !this.showView"  *ngFor="let item of projectsColorRed"  cdkDrag>   
+          <div class="col-md-2">             
+            <div class="panel-body border-red ">{{item.name}}
+            </div>             
+          </div>       
+          <div class="panel-body border-left-none col-md-4"> {{item.task}}         
+          </div>
+          <div class="panel-body border-left-none col-md-2"> {{item.idMember}}        
+          </div>
+          <div class="panel-body border-left-none col-md-1"> {{item.name}}        
+          </div>
+          <div class="panel-body border-left-none col-md-1"> {{item.date}}        
+          </div>
+          <div class="panel-body border-left-none col-md-2"> {{item.priority}}        
+          </div>
+        </div>
+         </cdk-drop> 
+        </ng-container>
+        <ng-container *ngIf="itemprojects.group == 'B'"> 
+          <cdk-drop cdkDropList id="listOne{{itemprojects.group}}" class="example-list" [connectedTo]="connectedTo" 
+            (dropped)="addToList($event)" 
+            [data]="projectsColorRedB">
+          <div class="row example-box" (mousedown)="this.showView = !this.showView" *ngFor="let item of projectsColorRedB" cdkDrag>   
+          <div class="col-md-2">             
+            <div class="panel-body border-red">{{item.name}}
+            </div>             
+          </div>       
+          <div class="panel-body border-left-none col-md-4"> {{item.task}}         
+          </div>
+          <div class="panel-body border-left-none col-md-2"> {{item.idMember}}        
+          </div>
+          <div class="panel-body border-left-none col-md-1"> {{item.name}}        
+          </div>
+          <div class="panel-body border-left-none col-md-1"> {{item.date}}        
+          </div>
+          <div class="panel-body border-left-none col-md-2"> {{item.priority}}        
+          </div>
+        </div>
+         </cdk-drop> 
+        </ng-container>         
+         
+      </div>  
+      <div class="panel panel-primary" >
+        <div class="row">
+          <div class="col-md-2">
+            <div class="panel-heading heading-green">Gold</div> 
+          </div>
+          <ng-container *ngIf="itemprojects.group == 'A'"> 
+            <div class="col-md-4 panel-heading" style="color: gray;"> {{projectsColorGreen.length? projectsColorGreen.length:0 }} {{projectsColorGreen.length == 0 || projectsColorGreen.length == 1? 'Task':'Tasks'}}       
+            </div>
+          </ng-container>
+          <ng-container *ngIf="itemprojects.group == 'B'"> 
+            <div class="col-md-4 panel-heading" style="color: gray;"> {{projectsColorGreenB.length? projectsColorGreenB.length:0 }} {{projectsColorGreenB.length == 0 || projectsColorGreenB.length == 1? 'Task':'Tasks'}}       
+            </div>
+          </ng-container>          
+          <div class="col-md-2 panel-heading" style="color: gray;">  DataSouce          
+          </div>
+          <div class="col-md-1 panel-heading" style="color: gray;">  Date Start          
+          </div>
+          <div class="col-md-1 panel-heading" style="color: gray;">  Time Work          
+          </div>
+          <div class="col-md-2 panel-heading" style="color: gray;">  Follow Status          
+          </div>
+        </div>
+        <ng-container *ngIf="itemprojects.group == 'A'"> 
+          <cdk-drop cdkDropList id="listTwo{{itemprojects.group}}" class="example-list" [connectedTo]="connectedTo" 
+              (dropped)="addToList($event)" 
+              [data]="projectsColorGreen">
+            <div class="row example-box" (mousedown)="this.showView = !this.showView" *ngFor="let item of projectsColorGreen" cdkDrag>   
+            <div class="col-md-2">             
+              <div class="panel-body border-green">{{item.name}}
+              </div>             
+            </div>       
+            <div class="panel-body border-left-none col-md-4"> {{item.task}}         
+            </div>
+            <div class="panel-body border-left-none col-md-2"> {{item.idMember}}        
+            </div>
+            <div class="panel-body border-left-none col-md-1"> {{item.name}}        
+            </div>
+            <div class="panel-body border-left-none col-md-1"> {{item.date}}        
+            </div>
+            <div class="panel-body border-left-none col-md-2"> {{item.priority}}           
+            </div>
+          </div>
+          </cdk-drop> 
+        </ng-container>
+        <ng-container *ngIf="itemprojects.group == 'B'"> 
+          <cdk-drop cdkDropList id="listTwo{{itemprojects.group}}" class="example-list" [connectedTo]="connectedTo" 
+              (dropped)="addToList($event)" 
+              [data]="projectsColorGreenB">
+            <div class="row example-box" (mousedown)="this.showView = !this.showView" *ngFor="let item of projectsColorGreenB" cdkDrag>   
+            <div class="col-md-2">             
+              <div class="panel-body border-green">{{item.name}}
+              </div>             
+            </div>       
+            <div class="panel-body border-left-none col-md-4"> {{item.task}}         
+            </div>
+            <div class="panel-body border-left-none col-md-2"> {{item.idMember}}        
+            </div>
+            <div class="panel-body border-left-none col-md-1"> {{item.name}}        
+            </div>
+            <div class="panel-body border-left-none col-md-1"> {{item.date}}        
+            </div>
+            <div class="panel-body border-left-none col-md-2"> {{item.priority}}           
+            </div>
+          </div>
+          </cdk-drop> 
+        </ng-container>  
+         
+      </div>
+      <div class="panel panel-primary" >
+        <div class="row"  >
+          <div class="col-md-2" >
+            <div class="panel-heading heading-blue">Normal</div> 
+          </div>
+          <ng-container *ngIf="itemprojects.group == 'A'"> 
+            <div class="col-md-4 panel-heading" style="color: gray;"> {{projectsColorYellow.length? projectsColorYellow.length:0 }} {{projectsColorYellow.length == 0 || projectsColorYellow.length == 1? 'Task':'Tasks'}}     
+            </div>
+          </ng-container>
+          <ng-container *ngIf="itemprojects.group == 'B'"> 
+            <div class="col-md-4 panel-heading" style="color: gray;"> {{projectsColorYellowB.length? projectsColorYellowB.length:0 }} {{projectsColorYellowB.length == 0 || projectsColorYellowB.length == 1? 'Task':'Tasks'}}     
+            </div>
+          </ng-container>         
+          <div class="col-md-2 panel-heading" style="color: gray;">  DataSouce          
+          </div>
+          <div class="col-md-1 panel-heading" style="color: gray;">  Date Start          
+          </div>
+          <div class="col-md-1 panel-heading" style="color: gray;">  Time Work          
+          </div>
+          <div class="col-md-2 panel-heading" style="color: gray;">  Follow Status          
+          </div>
+        </div>
+        <ng-container *ngIf="itemprojects.group == 'A'">  
+           <cdk-drop  cdkDropList id="listThree{{itemprojects.group}}" class="example-list" [connectedTo]="connectedTo" 
+            (dropped)="addToList($event)" 
+            [data]="projectsColorYellow">
+          <div class="row example-box" (mousedown)="this.showView = !this.showView" *ngFor="let item of projectsColorYellow" cdkDrag>   
+          <div class="col-md-2">             
+            <div class="panel-body border-blue">{{item.name}}
+            </div>             
+          </div>       
+          <div class="panel-body border-left-none col-md-4"> {{item.task}}         
+          </div>
+          <div class="panel-body border-left-none col-md-2"> {{item.idMember}}        
+          </div>
+          <div class="panel-body border-left-none col-md-1"> {{item.name}}        
+          </div>
+          <div class="panel-body border-left-none col-md-1"> {{item.date}}        
+          </div>
+          <div class="panel-body border-left-none col-md-2"> {{item.priority}}           
+          </div>
+        </div>
+        </cdk-drop>  
+        </ng-container>
+        <ng-container *ngIf="itemprojects.group == 'B'">  
+          <cdk-drop  cdkDropList id="listThree{{itemprojects.group}}" class="example-list" [connectedTo]="connectedTo" 
+           (dropped)="addToList($event)" 
+           [data]="projectsColorYellowB">
+         <div class="row example-box" (mousedown)="this.showView = !this.showView" *ngFor="let item of projectsColorYellowB" cdkDrag>   
+         <div class="col-md-2">             
+           <div class="panel-body border-blue">{{item.name}}
+           </div>             
+         </div>       
+         <div class="panel-body border-left-none col-md-4"> {{item.task}}         
+         </div>
+         <div class="panel-body border-left-none col-md-2"> {{item.idMember}}        
+         </div>
+         <div class="panel-body border-left-none col-md-1"> {{item.name}}        
+         </div>
+         <div class="panel-body border-left-none col-md-1"> {{item.date}}        
+         </div>
+         <div class="panel-body border-left-none col-md-2"> {{item.priority}}           
+         </div>
+       </div>
+       </cdk-drop>  
+       </ng-container>
+         
+      </div>  
+  </div>
+</div>
+
+<div class="q-view" [ngClass]="this.showView ? 'active' : ''"> 
+  <div class="overlay" (click)="this.showView = !this.showView"></div>
+  <div class="content">
+    <countup-timer [countUpTimerConfig]="testConfig"></countup-timer>
+    <br>
+    <div class="card-body">
+      <h2>Incident No. 12344432</h2>
+      <h4>Subject : ต้องการสินค้าเข้าร้าน</h4>      
+    </div>
+
+    <!-- [ tinymce editor ] start -->
+    <div class="col-sm-12">
+      <div class="card border-0 shadow-none">
+        <div class="card-body pr-0 pl-0 pt-0">
+          <div class="row">
+            <div class="col-auto">
+              <img class="media-object wid-60 img-radius" src="assets/images/user/avatar-5.jpg" alt="Generic placeholder image ">
+            </div>
+            <div class="col">
+              <div class="tab-block border-bottom mb-4 pb-3">
+                <h5><i class="feather icon-corner-up-left mr-1"></i>Reply</h5>
+              </div>
+              <p class="text-danger"><span class="font-weight-bold mr-1">Note!</span>This ticket is closed. If you want to re-open it, just post a reply below.</p>
+              <app-tinymce [(ngModel)]='basicContent' #tinymce='tinymce'></app-tinymce>
+              <div class="btn-block mt-3">
+                <div class="btn-group mb-2 mr-2" ngbDropdown>
+                  <button type="button" class="btn btn-primary">Primary</button>
+                  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" ngbDropdownToggle data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only">Toggle Dropdown</span></button>
+                  <div class="dropdown-menu" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:">Action</a>
+                    <a class="dropdown-item" href="javascript:">Another action</a>
+                    <a class="dropdown-item" href="javascript:">Something else here</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript:">Separated link</a>
+                  </div>
+                </div>
+                <div class="file btn btn-outline-secondary file-btn">
+                  <i class="feather icon-paperclip"></i>Add Atachment
+                  <input type="file" name="file" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row border-bottom border-top pb-3 pt-4 pl-3 pr-3">
+          <div class="col-auto">
+            <img class="media-object wid-60 img-radius" src="assets/images/user/avatar-5.jpg" alt="Generic placeholder image ">
+          </div>
+          <div class="col">
+            <h6 class="mb-0">Support Agent name<span class="badge badge-secondary ml-2">Support Agent</span></h6>
+            <label class="text-muted">5 Month ago</label>
+          </div>
+          <div class="col-auto">
+            <ul class="list-unstyled mb-0">
+              <li class="d-inline-block mr-1"><a href="javascript:"><i class="feather icon-edit text-muted"></i></a></li>
+              <li class="d-inline-block"><a href="javascript:"><i class="feather icon-trash-2 text-muted"></i></a></li>
+            </ul>
+          </div>
+          <div class="col-md-12 mt-3">
+            <div class="comment-content">
+              <p>hello John lui,</p>
+              <p>you need to create <strong>"toolbar-options" div only once</strong> in a page in your code, this div fill found
+                <strong>every "td"</strong> tag in your page, just remove those things.
+              </p>
+              <p>and also</p>
+              <p>in option button add "<strong>p-0</strong>" class in "<strong>I</strong>" tag</p>
+              <p>to</p>
+              <p></p>
+              <p>Thanks...</p>
+            </div>
+          </div>
+        </div>
+        <div class="row border-bottom pb-3 pt-4 pl-3 pr-3">
+          <div class="col-auto">
+            <img class="media-object wid-60 img-radius" src="assets/images/user/avatar-4.jpg" alt="Generic placeholder image ">
+          </div>
+          <div class="col">
+            <h6 class="mb-0">Support Agent name<span class="badge badge-secondary ml-2">Support Agent</span></h6>
+            <label class="text-muted">5 Month ago</label>
+          </div>
+          <div class="col-auto">
+            <ul class="list-unstyled mb-0">
+              <li class="d-inline-block mr-1"><a href="javascript:"><i class="feather icon-edit text-muted"></i></a></li>
+              <li class="d-inline-block"><a href="javascript:"><i class="feather icon-trash-2 text-muted"></i></a></li>
+            </ul>
+          </div>
+          <div class="col-md-12 mt-3">
+            <div class="comment-content">
+              <p>hello John lui,</p>
+              <p>you need to create <strong>"toolbar-options" div only once</strong> in a page in your code, this div fill found
+                <strong>every "td"</strong> tag in your page, just remove those things.
+              </p>
+              <p>and also</p>
+              <p>in option button add "<strong>p-0</strong>" class in "<strong>I</strong>" tag</p>
+              <p>to</p>
+              <p></p>
+              <p>Thanks...</p>
+            </div>
+            <div class="row text-center mb-2">
+              <div class="col-xl-2 col-lg-3 col-sm-4 col-xs-12">
+                <a href="assets/images/light-box/l1.jpg" data-toggle="lightbox" data-gallery="example-gallery"><img src="assets/images/light-box/sl1.jpg" class="img-fluid m-b-10" alt=""></a>
+              </div>
+              <div class="col-xl-2 col-lg-3 col-sm-4 col-xs-12">
+                <a href="assets/images/light-box/l1.jpg" data-toggle="lightbox" data-gallery="example-gallery"><img src="assets/images/light-box/sl1.jpg" class="img-fluid m-b-10" alt=""></a>
+              </div>
+              <div class="col-xl-2 col-lg-3 col-sm-4 col-xs-12">
+                <a href="assets/images/light-box/l1.jpg" data-toggle="lightbox" data-gallery="example-gallery"><img src="assets/images/light-box/sl1.jpg" class="img-fluid m-b-10" alt=""></a>
+              </div>
+              <div class="col-xl-2 col-lg-3 col-sm-4 col-xs-12">
+                <a href="assets/images/light-box/l1.jpg" data-toggle="lightbox" data-gallery="example-gallery"><img src="assets/images/light-box/sl1.jpg" class="img-fluid m-b-10" alt=""></a>
+              </div>
+              <div class="col-xl-2 col-lg-3 col-sm-4 col-xs-12">
+                <a href="assets/images/light-box/l1.jpg" data-toggle="lightbox" data-gallery="example-gallery"><img src="assets/images/light-box/sl1.jpg" class="img-fluid m-b-10" alt=""></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row border-bottom pb-3 pt-4 pl-3 pr-3">
+          <div class="col-auto">
+            <img class="media-object wid-60 img-radius" src="assets/images/user/avatar-3.jpg" alt="Generic placeholder image ">
+          </div>
+          <div class="col">
+            <h6 class="mb-0">Support Agent name<span class="badge badge-secondary ml-2">Support Agent</span></h6>
+            <label class="text-muted">5 Month ago</label>
+          </div>
+          <div class="col-auto">
+            <ul class="list-unstyled mb-0">
+              <li class="d-inline-block mr-1"><a href="javascript:"><i class="feather icon-edit text-muted"></i></a></li>
+              <li class="d-inline-block"><a href="javascript:"><i class="feather icon-trash-2 text-muted"></i></a></li>
+            </ul>
+          </div>
+          <div class="col-md-12 mt-3">
+            <div class="comment-content">
+              <p>hello John lui,</p>
+              <p>you need to create <strong>"toolbar-options" div only once</strong> in a page in your code, this div fill found
+                <strong>every "td"</strong> tag in your page, just remove those things.
+              </p>
+              <p>and also</p>
+              <p>in option button add "<strong>p-0</strong>" class in "<strong>I</strong>" tag</p>
+              <p>to</p>
+              <p></p>
+              <p>Thanks...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ tinymce editor ] end -->
   </div>
 </div>

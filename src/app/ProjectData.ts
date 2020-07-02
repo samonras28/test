@@ -4,4 +4,6 @@ export interface ProjectData {
     task?: string;
     date?: string;
     priority?: string;
+    color?: string;
+    id?: string;
 }
